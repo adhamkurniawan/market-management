@@ -10,8 +10,6 @@ class User < ApplicationRecord
   has_many :categories, dependent: :destroy
   has_many :products, dependent: :destroy
 
-  validates_presence_of :name, :email, :password, :password_confirmation
-
   private
     def set_default_role
       self.role ||= Role.find_by_name('user')

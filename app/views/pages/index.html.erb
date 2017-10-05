@@ -2,20 +2,26 @@
   <h1>Welcome to Sunday Market Management</h1>
   <p>Kombucha letterpress leggings mlkshk keytar pop-up poke deep v normcore. </p>
   <p>
-    <%= link_to "Join as Seller", new_user_registration_path, class: "btn btn-success btn-lg" %>
+    <% if user_signed_in? %>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-success btn-lg" %>
+    <% else %>
+      <%= link_to "Join as Seller", new_user_registration_path, class: "btn btn-success btn-lg" %>
+    <% end %>
   </p>
 </div>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
-      <div class="thumbnail">
-        <img src="..." alt="...">
-        <div class="caption">
-          <h3>Random Product</h3>
-          <p>...</p>
+    <% @products.each do |product| %>
+      <div class="col-md-4">
+        <div class="thumbnail">
+          <img src="..." alt="...">
+          <div class="caption">
+            <h3><%= product.try(:name) %></h3>
+            <p><%= product.try(:description) %></p>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
