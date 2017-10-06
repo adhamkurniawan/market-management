@@ -1,8 +1,8 @@
 # Sunday Market Management
 
-There is a fictional group of investors who booked a venue for a Sunday Market. They want the sellers to sign-up online to book a spot in the market and list up to 20 items they will list for sale. There will be 5 categories of sale items and each seller can list products in multiple categories for sale. Each category can have multiple sellers listing products as well. The admins will have the option to add categories if necessary. Buyers can then view the marketplace of products, categories etc. to see if it's worth their time to visit the Sunday Market!
+Code Challenge.
 
-# Features:
+## Features:
 
 * Landing Page
 * Sign-up, log-in, logout feature for sellers
