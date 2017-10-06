@@ -19,6 +19,9 @@
         </div>
       </div>
     <% end %>
+    <div class="digg_pagination">
+      <%= will_paginate @posts, :container => false %>
+    </div>
   </div>
 
   <div class="col-md-4">

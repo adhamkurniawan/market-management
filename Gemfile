@@ -18,6 +18,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'simple_form'
 gem 'devise'
 gem 'paperclip'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
