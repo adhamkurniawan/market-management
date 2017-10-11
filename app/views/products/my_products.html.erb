@@ -11,7 +11,7 @@
         <div class="media-body">
           <h4 class="media-heading"><%= product.name %></h4>
           <p>
-            Created at <%= product.created_at.strftime("%A, %b %d") %> by <strong><%= product.user.name %></strong>
+            <span class="text-capitalize"><%= time_ago_in_words(product.created_at) %></span> by <strong><%= product.user.name %></strong>
             <br>
             <small>Category: <strong><%= product.category.name %></strong></small>
           </p>
