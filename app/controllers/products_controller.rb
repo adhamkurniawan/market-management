@@ -6,19 +6,14 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+    @users = User.all
+
     if params[:category].blank?
       @products = Product.paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
     else
       @category_id = Category.find_by(name: params[:category]).id
       @products = Product.where(category_id: @category_id).paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
     end
-
-    # if params[:user].blank?
-    #   @products = Product.paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
-    # else
-    #   @user_id = User.find_by(name: params[:user]).id
-    #   @products = Product.where(user_id: @user_id).paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
-    # end
   end
 
   # GET /products/1
@@ -76,6 +71,7 @@ class ProductsController < ApplicationController
   end
 
   def my_products
+    @users = User.all
     @products = current_user.products.paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
   end
 

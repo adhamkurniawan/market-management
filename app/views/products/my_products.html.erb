@@ -20,7 +20,7 @@
       </div>
     <% end %>
     <div class="digg_pagination">
-      <%= will_paginate @posts, :container => false %>
+      <%= will_paginate @products, :container => false %>
     </div>
   </div>
 
@@ -29,8 +29,22 @@
     <div class="list-group">
       <% Category.all.each do |category| %>
         <%= link_to products_path(category: category.name), class: "list-group-item" do %>
-          <!-- <span class="badge"><%#= count_product_by_category %></span> -->
+          <span class="badge">
+            <%= category.products.count %>
+          </span>
           <%= category.name %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <h3>Users</h3>
+    <div class="list-group">
+      <% @users.each do |user| %>
+        <%= link_to user_path(user), class: "list-group-item" do %>
+          <span class="badge">
+            <%= user.products.count %>
+          </span>
+          <%= user.name %>
         <% end %>
       <% end %>
     </div>

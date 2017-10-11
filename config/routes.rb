@@ -3,10 +3,11 @@ Rails.application.routes.draw do
 
   resources :products
   resources :categories
-  resources :users, only: [:index, :show]
+  resources :users, only: [:show]
   root 'pages#index'
 
   get 'my_products', to: 'products#my_products'
+  # get 'search_products', to: 'products#search'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
