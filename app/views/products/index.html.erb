@@ -10,19 +10,40 @@
         </div>
         <div class="media-body">
           <h4 class="media-heading">
+            <!-- Product name -->
             <%= product.name %>
-            <% if product.user == current_user -%>
-              <%= link_to product_path(product), method: :delete, data: {confirm: "Are you sure?"} do %>
-                <%= fa_icon "trash", class: "pull-right dark" %>
-              <% end %>
 
-              <%= link_to edit_product_path(product) do %>
-                <%= fa_icon "pencil", class: "pull-right dark" %>
+            <div class="pull-right">
+              <div class="btn-group">
+                <!-- Like product -->
+                <%= link_to like_product_path(product), method: :put, class: "btn btn-default btn-xs" do %>
+                  <%= fa_icon "thumbs-o-up" %>
+                  <%= product.get_upvotes.size %>
+                <% end %>
+
+                <!-- Dislike product -->
+                <%= link_to dislike_product_path(product), method: :put, class: "btn btn-default btn-xs" do %>
+                  <%= fa_icon "thumbs-o-down" %>
+                  <%= product.get_downvotes.size %>
+                <% end %>
+              </div>
+
+              <!-- Check product created by user == user_id -->
+              <% if product.user == current_user -%>
+                <div class="btn-group">
+                  <%= link_to product_path(product), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-xs" do %>
+                    <%= fa_icon "trash" %>
+                  <% end %>
+
+                  <%= link_to edit_product_path(product), class: "btn btn-primary btn-xs" do %>
+                    <%= fa_icon "pencil" %>
+                  <% end %>
+                </div>
               <% end %>
-            <% end %>
+            </div>
           </h4>
           <p>
-            <span class="text-capitalize"><%= time_ago_in_words(product.created_at) %></span> by <strong><%= product.user.name %></strong>
+            <span class="text-capitalize"><%= time_ago_in_words(product.created_at) %></span> ago by <strong><%= link_to product.user.name %></strong>
             <br>
             <small>Category: <strong><%= product.category.name %></strong></small>
           </p>

@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }
 
-  resources :products
+  resources :products do
+    member do
+      put 'like', to: 'products#upvote'
+      put 'dislike', to: 'products#downvote'
+    end
+  end
   resources :categories
   resources :users, only: [:show]
   root 'pages#index'

@@ -3,6 +3,8 @@ class Product < ApplicationRecord
   belongs_to :user
   belongs_to :category
 
+  acts_as_votable
+
   has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" },
                     default_url: "/images/:style/missing.svg",
                     :storage => :cloudinary, :path => 'market-management/products/:filename',
