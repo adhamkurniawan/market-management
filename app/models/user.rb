@@ -6,7 +6,6 @@ class User < ApplicationRecord
 
   # belongs_to :role
   # before_create :set_default_role
-
   has_many :categories, dependent: :destroy
   has_many :products, dependent: :destroy
 

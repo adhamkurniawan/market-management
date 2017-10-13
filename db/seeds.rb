@@ -6,8 +6,5 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-['user', 'admin'].each do |role|
-  Role.find_or_create_by({name: role})
-end
-
-User.create(name: 'Admin', email: 'admin@admin.com', password: 'password', password_confirmation: 'password', role_id: 2)
+User.create(name: 'Admin SMM', email: 'admin@admin.com', password: 'password', password_confirmation: 'password', admin: true)
+categories = Category.create([{name: 'Fruits', user_id: 2}, {name: 'Vegetables', user_id: 2}])
