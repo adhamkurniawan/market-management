@@ -17,6 +17,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'simple_form'
 gem 'devise'
 gem 'paperclip'
+gem 'paperclip-cloudinary'
+gem 'mailgun_rails'
 gem 'will_paginate'
 
 group :development, :test do
