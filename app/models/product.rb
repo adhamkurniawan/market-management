@@ -5,7 +5,7 @@ class Product < ApplicationRecord
 
   acts_as_votable
 
-  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" },
+  has_attached_file :image, styles: { medium: "300x300#", thumb: "1500x1500#" },
                     default_url: "/images/:style/missing.svg",
                     :storage => :cloudinary, :path => 'market-management/products/:filename',
                     :cloudinary_credentials => Rails.root.join("config/cloudinary.yml")
