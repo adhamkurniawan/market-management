@@ -5,17 +5,29 @@
       <div class="media">
         <div class="media-left">
           <a href="#">
-            <img class="media-object" width="200" height="200" src="<%= image_path product.image.url %>" alt="<%= product.name %>">
+            <img class="media-object" width="200" height="200" src="<%= cl_image_path(product.image, :secure => true) %>" alt="<%= product.name %>">
           </a>
         </div>
         <div class="media-body">
-          <h4 class="media-heading"><%= product.name %></h4>
+          <h4 class="media-heading">
+            <%= product.name %>
+            <% if product.user == current_user -%>
+              <%= link_to product_path(product), method: :delete, data: {confirm: "Are you sure?"} do %>
+                <%= fa_icon "trash", class: "pull-right dark" %>
+              <% end %>
+
+              <%= link_to edit_product_path(product) do %>
+                <%= fa_icon "pencil", class: "pull-right dark" %>
+              <% end %>
+            <% end %>
+          </h4>
           <p>
             <span class="text-capitalize"><%= time_ago_in_words(product.created_at) %></span> by <strong><%= product.user.name %></strong>
             <br>
             <small>Category: <strong><%= product.category.name %></strong></small>
           </p>
           <%= simple_format(product.description) %>
+
         </div>
       </div>
     <% end %>

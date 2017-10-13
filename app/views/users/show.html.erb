@@ -5,7 +5,7 @@
       <div class="media">
         <div class="media-left">
           <a href="#">
-            <img class="media-object" width="200" height="200" src="<%= image_path product.image.url %>" alt="<%= product.name %>">
+            <img class="media-object" width="200" height="200" src="<%= cl_image_path(product.image, :secure => true) %>" alt="<%= product.name %>">
           </a>
         </div>
         <div class="media-body">
