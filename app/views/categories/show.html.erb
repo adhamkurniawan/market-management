@@ -1,9 +1,91 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-8">
+    <h3>Products</h3>
+    <% @products.each do |product| %>
+      <div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" width="200" height="200" src="<%= image_path product.image.url %><%#= cl_image_path(product.image.url(:original), :secure => true) %>" alt="<%= product.name %>">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">
+            <!-- Product name -->
+            <%= product.name %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @category.name %>
-</p>
+            <div class="pull-right">
+              <div class="btn-group">
+                <!-- Like product -->
+                <%= link_to like_product_path(product), method: :put, class: "btn btn-default btn-xs" do %>
+                  <%= fa_icon "thumbs-o-up" %>
+                  <%= product.get_upvotes.size %>
+                <% end %>
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+                <!-- Dislike product -->
+                <%= link_to dislike_product_path(product), method: :put, class: "btn btn-default btn-xs" do %>
+                  <%= fa_icon "thumbs-o-down" %>
+                  <%= product.get_downvotes.size %>
+                <% end %>
+              </div>
+
+              <!-- Check product created by user == user_id -->
+              <% if product.user == current_user -%>
+                <div class="btn-group">
+                  <%= link_to product_path(product), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-xs" do %>
+                    <%= fa_icon "trash" %>
+                  <% end %>
+
+                  <%= link_to edit_product_path(product), class: "btn btn-primary btn-xs" do %>
+                    <%= fa_icon "pencil" %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </h4>
+          <p>
+            <span class="text-capitalize">
+              <%= time_ago_in_words(product.created_at) %>
+            </span> ago by
+            <strong>
+              <%= link_to product.user.name, user_path(product) %>
+            </strong>
+
+            <br>
+
+            <small>Category: <strong><%= link_to product.category.name, category_path(product) %></strong></small>
+          </p>
+          <%= simple_format truncate((product.description), length: 350, omission: '... ') { link_to "Continue Read", product_path(product) } %>
+        </div>
+      </div>
+    <% end %>
+    <div class="digg_pagination">
+      <%= will_paginate @products, :container => false %>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <h3>Categories</h3>
+    <div class="list-group">
+      <% Category.all.each do |category| %>
+        <%= link_to products_path(category: category.name), class: "list-group-item" do %>
+          <span class="badge">
+            <%= category.products.count %>
+          </span>
+          <%= category.name %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <h3>Users</h3>
+    <div class="list-group">
+      <% @users.take(5).each do |user| %>
+        <%= link_to user_path(user), class: "list-group-item" do %>
+          <span class="badge">
+            <%= user.products.count %>
+          </span>
+          <%= user.name %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

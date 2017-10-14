@@ -1,30 +1,25 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
   before_action :set_category, only: [:show, :edit, :update, :destroy]
   layout 'app-user'
 
-  # GET /categories
-  # GET /categories.json
   def index
     @categories = Category.all
   end
 
-  # GET /categories/1
-  # GET /categories/1.json
   def show
+    @users = User.all
+    @category = Category.find(params[:id])
+    @products = Product.where(category_id: @category).paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
   end
 
-  # GET /categories/new
   def new
     @category = current_user.categories.build
   end
 
-  # GET /categories/1/edit
   def edit
   end
 
-  # POST /categories
-  # POST /categories.json
   def create
     @category = current_user.categories.build(category_params)
 
@@ -39,8 +34,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /categories/1
-  # PATCH/PUT /categories/1.json
   def update
     respond_to do |format|
       if @category.update(category_params)
@@ -53,8 +46,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # DELETE /categories/1
-  # DELETE /categories/1.json
   def destroy
     @category.destroy
     respond_to do |format|
@@ -64,12 +55,10 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_category
       @category = Category.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.require(:category).permit(:name)
     end

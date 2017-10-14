@@ -43,12 +43,18 @@
             </div>
           </h4>
           <p>
-            <span class="text-capitalize"><%= time_ago_in_words(product.created_at) %></span> ago by <strong><%= link_to product.user.name %></strong>
-            <br>
-            <small>Category: <strong><%= product.category.name %></strong></small>
-          </p>
-          <%= simple_format(product.description) %>
+            <span class="text-capitalize">
+              <%= time_ago_in_words(product.created_at) %>
+            </span> ago by
+            <strong>
+              <%= link_to product.user.name, user_path(product) %>
+            </strong>
 
+            <br>
+
+            <small>Category: <strong><%= link_to product.category.name, category_path(product) %></strong></small>
+          </p>
+          <%= simple_format truncate((product.description), length: 350, omission: '... ') { link_to "Continue Read", product_path(product) } %>
         </div>
       </div>
     <% end %>
@@ -72,7 +78,7 @@
 
     <h3>Users</h3>
     <div class="list-group">
-      <% @users.each do |user| %>
+      <% @users.take(5).each do |user| %>
         <%= link_to user_path(user), class: "list-group-item" do %>
           <span class="badge">
             <%= user.products.count %>

@@ -5,11 +5,12 @@
       <div class="media">
         <div class="media-left">
           <a href="#">
-            <img class="media-object" width="200" height="200" src="<%= cl_image_path(product.image, :secure => true) %>" alt="<%= product.name %>">
+            <img class="media-object" width="200" height="200" src="<%= cl_image_path(product.image.url(:original), :secure => true) %>" alt="<%= product.name %>">
           </a>
         </div>
         <div class="media-body">
           <h4 class="media-heading">
+            <!-- Product name -->
             <%= product.name %>
 
             <div class="pull-right">
@@ -42,11 +43,18 @@
             </div>
           </h4>
           <p>
-            <span class="text-capitalize"><%= time_ago_in_words(product.created_at) %></span> by <strong><%= product.user.name %></strong>
+            <span class="text-capitalize">
+              <%= time_ago_in_words(product.created_at) %>
+            </span> ago by
+            <strong>
+              <%= link_to product.user.name, user_path(product) %>
+            </strong>
+
             <br>
-            <small>Category: <strong><%= product.category.name %></strong></small>
+
+            <small>Category: <strong><%= link_to product.category.name, category_path(product) %></strong></small>
           </p>
-          <%= simple_format(product.description) %>
+          <%= simple_format truncate((product.description), length: 350, omission: '... ') { link_to "Continue Read", product_path(product) } %>
         </div>
       </div>
     <% end %>
@@ -70,7 +78,7 @@
 
     <h3>Users</h3>
     <div class="list-group">
-      <% @users.each do |user| %>
+      <% @users.take(5).each do |user| %>
         <%= link_to user_path(user), class: "list-group-item" do %>
           <span class="badge">
             <%= user.products.count %>
