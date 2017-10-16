@@ -54,4 +54,11 @@ Rails.application.configure do
 
   # Needed for devise
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Needed for mailgun rails
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+		api_key: ENV["mailgun_api_key"],
+		domain: ENV["mailgun_domain"]
+  }
 end
