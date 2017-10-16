@@ -90,7 +90,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Needed for devise
-  config.action_mailer.default_url_options = { host: 'https://desolate-cliffs-97246.herokuapp.com/' }
+  config.action_mailer.default_url_options = { host: 'https://desolate-cliffs-97246.herokuapp.com' }
 
   # Needed for mailgun rails
   config.action_mailer.delivery_method = :mailgun
