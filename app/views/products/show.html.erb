@@ -1,26 +1,87 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-3">
+        <img class="img-responsive" src="<%= image_path @product.image.url %>" alt="<%= @product.name %>">
+      </div>
+      <div class="col-xs-9">
+        <h1>
+          <%= @product.name %>
 
-<img class="img-responsive" src="<%= image_path @product.image.url %>" alt="<%= @product.name %>">
+          <div class="pull-right">
+            <div class="btn-group">
+              <!-- Like product -->
+              <%= link_to like_product_path(@product), method: :put, class: "btn btn-default btn-xs" do %>
+                <%= fa_icon "thumbs-o-up" %>
+                <%= @product.get_upvotes.size %>
+              <% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
+              <!-- Dislike product -->
+              <%= link_to dislike_product_path(@product), method: :put, class: "btn btn-default btn-xs" do %>
+                <%= fa_icon "thumbs-o-down" %>
+                <%= @product.get_downvotes.size %>
+              <% end %>
+            </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @product.description %>
-</p>
+            <!-- Check product created by user == user_id -->
+            <% if @product.user == current_user -%>
+              <div class="btn-group">
+                <%= link_to product_path(@product), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-xs" do %>
+                  <%= fa_icon "trash" %>
+                <% end %>
 
-<p>
-  <strong>User:</strong>
-  <%= @product.user.name %>
-</p>
+                <%= link_to edit_product_path(@product), class: "btn btn-primary btn-xs" do %>
+                  <%= fa_icon "pencil" %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </h1>
+        <p>
+          <span class="text-capitalize">
+            <%= time_ago_in_words(@product.created_at) %>
+          </span> ago by
+          <strong>
+            <%= link_to @product.user.name, user_path(@product) %>
+          </strong>
+          -
+          <strong>
+            <%= link_to @product.category.name, category_path(@product) %></strong></small>
+          </strong>
+        </p>
+        <div>
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a>
+            </li>
+          </ul>
+          <div class="tab-content panel-body">
+            <div role="tabpanel" class="tab-pane active" id="description">
+              <%= simple_format(@product.description) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= link_to 'Back', products_path, class: "btn btn-default" %>
+  </div>
+</div>
 
-<p>
-  <strong>Category:</strong>
-  <%= @product.category.name %>
-</p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+
+<hr/>
+
+<h2>Random Product</h2>
+<div class="row">
+  <% @products.each do |product| %>
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <img class="img-responsive" width="250" height="250" src="<%= image_path product.image.url %><%#= cl_image_path(product.try(:image), :secure => true) %>" alt="<%= product.try(:name) %>">
+        <div class="caption">
+          <h3><%= product.try(:name) %></h3>
+          <p><%= simple_format(truncate(product.try(:description), length: 250, omission: '... ') { link_to "Continue Read", product_path(product) }) %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

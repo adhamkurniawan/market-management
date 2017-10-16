@@ -15,6 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @products = Product.limit(6).order("RANDOM()")
   end
 
   def new
